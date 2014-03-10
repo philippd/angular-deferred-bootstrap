@@ -1,0 +1,32 @@
+{
+  "name": "angular-async-bootstrap",
+  "version": "0.0.1",
+  "description": "Bootstrap AngularJS apps with async config.",
+  "homepage": "https://github.com/philippd/angular-async-bootstrap",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/philippd/angular-async-bootstrap"
+  },
+  "scripts": {
+    "postinstall": "./node_modules/.bin/bower install"
+  },
+  "author": {
+    "name": "Philipp Denzler"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "~1.2.8",
+    "karma": "~0.10.9",
+    "grunt-karma": "~0.6.x",
+    "grunt": "~0.4.3",
+    "grunt-contrib-watch": "~0.5.2",
+    "grunt-contrib-concat": "~0.3.x",
+    "grunt-contrib-uglify": "~0.4.x",
+    "grunt-contrib-jshint": "~0.8.x",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-bump": "0.0.13",
+    "grunt-conventional-changelog": "1.1.0",
+    "load-grunt-tasks": "~0.4.0",
+    "grunt-ngdocs": "~0.2.1"
+  }
+}

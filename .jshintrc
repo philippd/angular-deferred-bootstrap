@@ -1,0 +1,22 @@
+{
+  "predef": ["describe", "it", "expect"],
+  "esnext": false,
+  "bitwise": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": false,
+  "newcap": true,
+  "noarg": true,
+  "quotmark": "single",
+  "regexp": true,
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "globalstrict": true,
+  "trailing": true,
+  "smarttabs": true,
+  "browser": true,
+  "node": true
+}
