@@ -1,9 +1,25 @@
 var express = require('express');
 
-// Create express facility.
 var app = express();
-// Create a HTTP server object.
-var server = require('http').createServer(app), url = require('url'), fs = require('fs');
+var server = require('http').createServer(app),
+  url = require('url'),
+  fs = require('fs');
+
+var getDemoConfig = function (req, res) {
+  function answer(code, data) {
+    res.writeHead(code,{
+      'Content-Type':'application/json;charset=utf-8',
+      'Access-Control-Allow-Origin':'*',
+      'Access-Control-Allow-Headers':'X-Requested-With'
+    });
+    res.end(data);
+  }
+
+  fs.readFile('./demo/demo.config.json', function(err, data) {
+    if (err) answer(404, '');
+    else answer(200, data);
+  });
+};
 
 app.configure(function () {
   app.use(express.logger('dev'));
@@ -13,23 +29,8 @@ app.configure(function () {
   app.use(express.static(__dirname));
   app.use(app.router);
 
-
-  app.get('/api/demo-config', function (req, res) {
-    function answer(code, data) {
-      res.writeHead(code,{
-        'Content-Type':'application/json;charset=utf-8',
-        'Access-Control-Allow-Origin':'*',
-        'Access-Control-Allow-Headers':'X-Requested-With'
-      });
-      res.end(data);
-    }
-
-    fs.readFile('./demo/demo.config.json', function(err, data) {
-      if (err) answer(404, '');
-      else answer(200, data);
-    });
-
-  });
+  app.get('/api/demo-config', getDemoConfig);
+  app.get('/api/demo-config-2', getDemoConfig);
 });
 
 module.exports = server;

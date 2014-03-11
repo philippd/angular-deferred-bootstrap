@@ -87,7 +87,7 @@ module.exports = function (grunt) {
       },
 
       core: {
-        src: ['<%= files.core %>'],
+        src: ['src/async-bootstrap.prefix', '<%= files.core %>', 'src/async-bootstrap.suffix'],
         dest: '<%= build_dir %>/angular-async-bootstrap.js'
       }
 
@@ -104,13 +104,14 @@ module.exports = function (grunt) {
     karma: {
       'unit': {
         configFile: 'karma.conf.js',
-        singleRun: true
-      },
-
-      'headless-unit': {
-        configFile: 'karma.conf.js',
         singleRun: true,
         browsers: ['PhantomJS']
+      },
+
+      'chrome-unit': {
+        configFile: 'karma.conf.js',
+        singleRun: true,
+        browsers: ['Chrome']
       },
 
       'firefox-unit': {
@@ -136,7 +137,7 @@ module.exports = function (grunt) {
   grunt.registerTask('test', ['karma:unit']);
 
   // Advanced test tasks
-  grunt.registerTask('test-headless', ['karma:headless-unit']);
+  grunt.registerTask('test-chrome', ['karma:chrome-unit']);
   grunt.registerTask('test-firefox', ['karma:firefox-unit']);
   grunt.registerTask('test-all', ['karma']);
 
