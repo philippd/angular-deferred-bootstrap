@@ -27,6 +27,8 @@
     "grunt-bump": "0.0.13",
     "grunt-conventional-changelog": "1.1.0",
     "load-grunt-tasks": "~0.4.0",
-    "grunt-ngdocs": "~0.2.1"
+    "grunt-ngdocs": "~0.2.1",
+    "grunt-express": "~0.3.3",
+    "express": "~3.2.4"
   }
 }

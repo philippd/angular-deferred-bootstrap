@@ -66,6 +66,16 @@ module.exports = function (grunt) {
       }
     },
 
+    express: {
+      server: {
+        options: {
+          port: 3005,
+          bases: '.',
+          server: __dirname + '/server.js'
+        }
+      }
+    },
+
     concat: {
 
       banner: {
