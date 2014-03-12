@@ -2,7 +2,7 @@
   "author": "Philipp Denzler",
   "name": "angular-async-bootstrap",
   "description": "Bootstrap AngularJS apps with async config",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "homepage": "https://github.com/philippd/angular-async-bootstrap",
   "repository": {
     "type": "git",

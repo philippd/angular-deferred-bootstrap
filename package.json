@@ -1,6 +1,6 @@
 {
   "name": "angular-async-bootstrap",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "Bootstrap AngularJS apps with async config.",
   "homepage": "https://github.com/philippd/angular-async-bootstrap",
   "repository": {
