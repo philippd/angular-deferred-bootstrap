@@ -47,7 +47,8 @@ function doBootstrap (element, module) {
 
 function bootstrap (config) {
 
-  var element = config.element,
+  var config = config || {},
+    element = config.element,
     module = config.module,
     promises = [],
     constantNames = [];
@@ -73,7 +74,7 @@ function bootstrap (config) {
 
   function handleResults (results) {
     forEach(results, function (value, index) {
-      var result = value.data ? value.data : value;
+      var result = value && value.data ? value.data : value;
       angular.module(module).constant(constantNames[index], result);
     });
     doBootstrap(element, module);
