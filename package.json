@@ -8,7 +8,8 @@
     "url": "git://github.com/philippd/angular-async-bootstrap"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/bower install"
+    "postinstall": "./node_modules/.bin/bower install",
+    "test": "./node_modules/karma/bin/karma start karma.conf.js --single-run"
   },
   "author": {
     "name": "Philipp Denzler"
