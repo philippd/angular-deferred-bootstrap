@@ -35,6 +35,13 @@ angular.module('MyApp', [])
   })
 ```
 
+## Loading and error indicators
+To make it possible to conditionally show a loading indicator or an error message when the initialization fails, the following CSS classes are set on the HTML body:
+
+* **async-bootstrap-loading** while the data is loading
+* **async-bootstrap-error** if an error occurs in a resolve function and the app ca not be bootstrapped
+
+Have a look at the demo pages to see this in action.
 
 ## Advanced usage
 You can have multiple constants resolved for your app and you can do in the resolve function whatever is necessary before the app is started. The only constraint is, that the function has to return a promise. It is important to note, that the arguments passed to your resolve functions are NOT dependency injected. You get access to the following services in the resolve function: $http, $q, injector
@@ -58,14 +65,6 @@ asyncBootstrapper.bootstrap({
   }
 });
 ```
-
-## Loading and error indicators
-To make it possible to conditionally show a loading indicator or an error message when the initialization fails, the following CSS classes are set on the HTML body:
-
-* **async-bootstrap-loading** while the data is loading
-* **async-bootstrap-error** if an error occurs in a resolve function and the app ca not be bootstrapped
-
-Have a look at the demo pages to see this in action.
 
 ## Testing
 Since the constants that asyncBootstrap adds to your applications module are not available in your unit tests, it makes sense to provide them in a global beforeEach():
