@@ -1,6 +1,8 @@
 # angular-async-bootstrap [![Build Status](https://travis-ci.org/philippd/angular-async-bootstrap.png?branch=master)](https://travis-ci.org/philippd/angular-async-bootstrap)
 
-> Bootstrap AngularJS apps with async config.
+> Initialize your AngularJS app with constants loaded from the back-end.
+
+This component provides a global resolve function for your app. It works similar to the resolve functions on ngRoute or ui-router: You define what needs to be loaded from the back-end before your application can be started and the async bootstrapper takes care of loading the data and bootstrapping the application.
 
 ## Install
 
@@ -10,7 +12,7 @@
 bower install --save angular-async-bootstrap
 ```
 
-## Use
+## Usage
 
 Instead of using the ng-app directive or angular.bootstrap(), use the asyncBootstrapper to initialize your app:
 ```js
@@ -33,14 +35,44 @@ angular.module('MyApp', [])
   })
 ```
 
-## Error handling
-TODO
 
-## Advanced configuration
-TODO
+## Advanced usage
+You can have multiple constants resolved for your app and you can do in the resolve function whatever is necessary before the app is started. The only constraint is, that the function has to return a promise. It is important to note, that the arguments passed to your resolve functions are NOT dependency injected. You get access to the following services in the resolve function: $http, $q, injector
+
+Example:
+```js
+asyncBootstrapper.bootstrap({
+  element: document.body,
+  module: 'MyApp',
+  resolve: {
+    APP_CONFIG: function ($http) {
+      return $http.get('/api/demo-config');
+    },
+    OTHER_CONSTANT: function ($http, $q, injector) {
+      var deferred = $q.defer(), $timeout = injector.get('$timeout');
+      $timeout(function () {
+        deferred.resolve('MyConstant');
+      }, 2000);
+      return deferred.promise;
+    }
+  }
+});
+```
+
+## Loading and error classes
+While the data is being loaded the CSS class 'async-bootstrap-loading' will be set on the body. If an error occurs during initializiation (in one of the resolve functions), the class 'async-bootstrap-error' will be set on the body.
+
+This makes it possible to show and hide a loading or error div. Have a look at the demo pages to see this in action.
 
 ## Testing
-TODO
+Since the constants that asyncBootstrap adds to your applications module are not available in your unit tests, it makes sense to provide them in a global beforeEach():
+```js
+beforeEach(function () {
+  module(function ($provide) {
+    $provide.constant('APP_CONFIG', { someUrl: '/dummyValue' });
+  });
+});
+```
 
 ## License
 
