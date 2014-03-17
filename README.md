@@ -2,7 +2,7 @@
 
 > Initialize your AngularJS app with constants loaded from the back-end.
 
-This component provides a global resolve function for your app. It works similar to the resolve functions on ngRoute or ui-router: You define what needs to be loaded from the back-end before your application can be started and the async bootstrapper takes care of loading the data and bootstrapping the application.
+This component provides a global resolve function for your app. It works similar to the resolve functions you may know from ngRoute or ui-router: You define what needs to be loaded from the back-end before your application can be started and the async bootstrapper takes care of loading the data and bootstrapping the application.
 
 ## Install
 
