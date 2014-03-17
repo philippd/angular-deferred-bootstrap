@@ -1,6 +1,6 @@
 'use strict';
 
-window.asyncBootstrapper.bootstrap({
+window.deferredBootstrapper.bootstrap({
   element: window.document.body,
   module: 'demoApp',
   resolve: {

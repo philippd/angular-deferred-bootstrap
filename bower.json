@@ -1,12 +1,12 @@
 {
   "author": "Philipp Denzler",
-  "name": "angular-async-bootstrap",
-  "description": "Bootstrap AngularJS apps with async config",
-  "version": "0.0.1-alpha",
-  "homepage": "https://github.com/philippd/angular-async-bootstrap",
+  "name": "angular-deferred-bootstrap",
+  "description": "Initialize AngularJS apps with constants loaded from the back-end",
+  "version": "0.0.1",
+  "homepage": "https://github.com/philippd/angular-deferred-bootstrap",
   "repository": {
     "type": "git",
-    "url": "git://github.com/philippd/angular-async-bootstrap"
+    "url": "git://github.com/philippd/angular-deferred-bootstrap"
   },
   "devDependencies": {
     "angular": "~1.2.14",

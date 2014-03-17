@@ -1,11 +1,11 @@
 {
-  "name": "angular-async-bootstrap",
-  "version": "0.0.1-alpha",
-  "description": "Bootstrap AngularJS apps with async config.",
-  "homepage": "https://github.com/philippd/angular-async-bootstrap",
+  "name": "angular-deferred-bootstrap",
+  "version": "0.0.1",
+  "description": "Initialize AngularJS apps with constants loaded from the back-end",
+  "homepage": "https://github.com/philippd/angular-deferred-bootstrap",
   "repository": {
     "type": "git",
-    "url": "git://github.com/philippd/angular-async-bootstrap"
+    "url": "git://github.com/philippd/angular-deferred-bootstrap"
   },
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install",

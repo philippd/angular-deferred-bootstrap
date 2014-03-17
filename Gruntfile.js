@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     files: {
 
       core: [
-        'src/async-bootstrap.js'
+        'src/deferred-bootstrap.js'
       ],
 
       test: ['test/**/*.js']
@@ -87,8 +87,8 @@ module.exports = function (grunt) {
       },
 
       core: {
-        src: ['src/async-bootstrap.prefix', '<%= files.core %>', 'src/async-bootstrap.suffix'],
-        dest: '<%= build_dir %>/angular-async-bootstrap.js'
+        src: ['src/deferred-bootstrap.prefix', '<%= files.core %>', 'src/deferred-bootstrap.suffix'],
+        dest: '<%= build_dir %>/angular-deferred-bootstrap.js'
       }
 
     },
@@ -96,7 +96,7 @@ module.exports = function (grunt) {
     uglify: {
       core: {
         files: {
-          '<%= build_dir %>/angular-async-bootstrap.min.js': '<%= concat.core.dest %>'
+          '<%= build_dir %>/angular-deferred-bootstrap.min.js': '<%= concat.core.dest %>'
         }
       }
     },

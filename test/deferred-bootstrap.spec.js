@@ -1,15 +1,15 @@
 'use strict';
 
 /* global checkConfig, isPromise */
-describe('asyncBootstrap()', function () {
+describe('deferredBootstrapper', function () {
 
-  it('should provide asyncBootstrap function', function () {
-    expect(typeof window.asyncBootstrapper.bootstrap).toBe('function');
+  it('should provide bootstrap function', function () {
+    expect(typeof window.deferredBootstrapper.bootstrap).toBe('function');
   });
 
   describe('checkConfig()', function () {
 
-    it('should accept valid async bootstrap config', function () {
+    it('should accept valid deferred bootstrap config', function () {
       var config = {
         element: {},
         module: 'myModule',

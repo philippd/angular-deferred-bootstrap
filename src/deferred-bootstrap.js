@@ -8,8 +8,8 @@ var isObject = angular.isObject,
   injector = angular.injector(['ng']),
   $q = injector.get('$q'),
   $http = injector.get('$http'),
-  loadingClass = 'async-bootstrap-loading',
-  errorClass = 'async-bootstrap-error';
+  loadingClass = 'deferred-bootstrap-loading',
+  errorClass = 'deferred-bootstrap-error';
 
 function addLoadingClass() {
   bodyElement.addClass(loadingClass);
@@ -89,6 +89,6 @@ function bootstrap (configParam) {
 }
 
 // publish external API
-window.asyncBootstrapper = {
+window.deferredBootstrapper = {
   bootstrap: bootstrap
 };
