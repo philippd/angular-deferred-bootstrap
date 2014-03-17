@@ -124,12 +124,6 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: false
       }
-    },
-
-    changelog: {
-      options: {
-        dest: 'CHANGELOG.md'
-      }
     }
   });
 

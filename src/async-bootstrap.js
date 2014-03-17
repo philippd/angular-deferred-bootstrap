@@ -45,9 +45,9 @@ function doBootstrap (element, module) {
   });
 }
 
-function bootstrap (config) {
+function bootstrap (configParam) {
 
-  var config = config || {},
+  var config = configParam || {},
     element = config.element,
     module = config.module,
     promises = [],

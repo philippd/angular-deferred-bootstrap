@@ -25,10 +25,7 @@
     "grunt-contrib-uglify": "~0.4.x",
     "grunt-contrib-jshint": "~0.8.x",
     "grunt-contrib-clean": "~0.5.0",
-    "grunt-bump": "0.0.13",
-    "grunt-conventional-changelog": "1.1.0",
     "load-grunt-tasks": "~0.4.0",
-    "grunt-ngdocs": "~0.2.1",
     "grunt-express": "~0.3.3",
     "express": "~3.2.4"
   }
