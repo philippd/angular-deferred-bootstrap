@@ -59,10 +59,13 @@ asyncBootstrapper.bootstrap({
 });
 ```
 
-## Loading and error classes
-While the data is being loaded the CSS class 'async-bootstrap-loading' will be set on the body. If an error occurs during initializiation (in one of the resolve functions), the class 'async-bootstrap-error' will be set on the body.
+## Loading and error indicators
+To make it possible to conditionally show a loading indicator or an error message when the initialization fails, the following CSS classes are set on the HTML body:
 
-This makes it possible to show and hide a loading or error div. Have a look at the demo pages to see this in action.
+* *async-bootstrap-loading* > while the data is loading
+* *async-bootstrap-error* > if an error occurs in a resolve function and the app ca not be bootstrapped
+
+Have a look at the demo pages to see this in action.
 
 ## Testing
 Since the constants that asyncBootstrap adds to your applications module are not available in your unit tests, it makes sense to provide them in a global beforeEach():
