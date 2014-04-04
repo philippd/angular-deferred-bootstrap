@@ -1,4 +1,4 @@
-# angular-deferred-bootstrap [![Build Status](https://travis-ci.org/philippd/angular-deferred-bootstrap.png?branch=master)](https://travis-ci.org/philippd/angular-deferred-bootstrap)
+# angular-deferred-bootstrap [![Build Status](https://travis-ci.org/philippd/angular-deferred-bootstrap.svg?branch=master)](https://travis-ci.org/philippd/angular-deferred-bootstrap)
 
 > Initialize your AngularJS app with constants loaded from the back-end.
 
