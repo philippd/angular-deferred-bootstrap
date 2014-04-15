@@ -39,7 +39,7 @@ angular.module('MyApp', [])
 To make it possible to conditionally show a loading indicator or an error message when the initialization fails, the following CSS classes are set on the HTML body:
 
 * **deferred-bootstrap-loading** while the data is loading
-* **deferred-bootstrap-error** if an error occurs in a resolve function and the app ca not be bootstrapped
+* **deferred-bootstrap-error** if an error occurs in a resolve function and the app can not be bootstrapped
 
 Have a look at the demo pages to see this in action.
 
