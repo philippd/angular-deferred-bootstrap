@@ -20,6 +20,7 @@ function removeLoadingClass() {
 }
 
 function addErrorClass() {
+  removeLoadingClass();
   bodyElement.addClass(errorClass);
 }
 
@@ -42,6 +43,7 @@ function checkConfig (config) {
 function doBootstrap (element, module) {
   angular.element(document).ready(function () {
     angular.bootstrap(element, [module]);
+    removeLoadingClass();
   });
 }
 
@@ -82,8 +84,7 @@ function bootstrap (configParam) {
 
   forEach(config.resolve, callResolveFn);
 
-  $q.all(promises)
-    .then(handleResults, addErrorClass)['finally'](removeLoadingClass);
+  $q.all(promises).then(handleResults, addErrorClass);
 
 }
 
