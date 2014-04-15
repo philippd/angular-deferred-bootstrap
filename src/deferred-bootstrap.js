@@ -83,8 +83,7 @@ function bootstrap (configParam) {
   forEach(config.resolve, callResolveFn);
 
   $q.all(promises)
-    .then(handleResults, addErrorClass)
-    .finally(removeLoadingClass);
+    .then(handleResults, addErrorClass)['finally'](removeLoadingClass);
 
 }
 
