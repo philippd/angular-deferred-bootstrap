@@ -31,6 +31,33 @@
 
 <script src="/bower_components/angular/angular.js"></script>
 <script src="/src/deferred-bootstrap.js"></script>
-<script src="resolve-with-rejection-demo.js"></script>
+<script>
+
+window.deferredBootstrapper.bootstrap({
+  element: window.document.body,
+  module: 'demoApp',
+  resolve: {
+    ERROR: function ($http, $q, injector) {
+      var deferred = $q.defer(), $timeout = injector.get('$timeout');
+      $timeout(function () {
+        deferred.reject('EXCEPTION');
+      }, 2000);
+      return deferred.promise;
+    }
+  },
+  onError: function(error) {
+    alert('could not start app: ' + error);
+  }
+});
+
+angular.module('demoApp', [])
+  .config(function (ERROR) {
+    console.log('in config() - ERROR: ' + JSON.stringify(ERROR));
+  })
+  .controller('AppController', function ($scope, ERROR) {
+    $scope.value = ERROR;
+  });
+
+</script>
 </body>
 </html>
