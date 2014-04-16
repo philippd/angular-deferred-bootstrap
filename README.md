@@ -46,6 +46,8 @@ Have a look at the demo pages to see this in action.
 ## Advanced usage
 You can have multiple constants resolved for your app and you can do in the resolve function whatever is necessary before the app is started. The only constraint is, that the function has to return a promise. It is important to note, that the arguments passed to your resolve functions are NOT dependency injected. You get access to the following services in the resolve function: $http, $q, injector
 
+To handle exceptions when the promises are resolved, you can add an onError function to the configuration object.
+
 Example:
 ```js
 deferredBootstrapper.bootstrap({
@@ -62,6 +64,9 @@ deferredBootstrapper.bootstrap({
       }, 2000);
       return deferred.promise;
     }
+  },
+  onError: function (error) {
+	alert('Could not bootstrap, error: ' + error);
   }
 });
 ```
