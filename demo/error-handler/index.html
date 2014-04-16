@@ -44,6 +44,9 @@ window.deferredBootstrapper.bootstrap({
       }, 2000);
       return deferred.promise;
     }
+  },
+  onError: function(error) {
+    alert('could not start app: ' + error);
   }
 });
 

@@ -51,6 +51,20 @@ describe('deferredBootstrapper', function () {
       }).toThrow('\'config.resolve\' must be an object.');
     });
 
+    it('should throw if onError is defined but not a function', function () {
+      var config = {
+        element: {},
+        module: 'myModule',
+        resolve: {
+          CONST: function () {}
+        },
+        onError: 'bla'
+      };
+      expect(function () {
+        checkConfig(config);
+      }).toThrow('\'config.onError\' must be a function.');
+    });
+
   });
 
   describe('isPromise()', function () {
