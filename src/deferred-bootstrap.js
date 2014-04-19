@@ -44,10 +44,16 @@ function checkConfig (config) {
 }
 
 function doBootstrap (element, module) {
+  var deferred = $q.defer();
+
   angular.element(document).ready(function () {
     angular.bootstrap(element, [module]);
     removeLoadingClass();
+
+    deferred.resolve(true);
   });
+
+  return deferred.promise;
 }
 
 function bootstrap (configParam) {
@@ -84,7 +90,8 @@ function bootstrap (configParam) {
       var result = value && value.data ? value.data : value;
       angular.module(module).constant(constantNames[index], result);
     });
-    doBootstrap(element, module);
+
+    return doBootstrap(element, module);
   }
 
   function handleError(error) {
@@ -96,7 +103,7 @@ function bootstrap (configParam) {
 
   forEach(config.resolve, callResolveFn);
 
-  $q.all(promises).then(handleResults, handleError);
+  return $q.all(promises).then(handleResults, handleError);
 
 }
 
