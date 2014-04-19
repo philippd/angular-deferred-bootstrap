@@ -1,10 +1,144 @@
 'use strict';
 
-/* global checkConfig, isPromise */
+// A jasmine 2.0 -like interface for async tests
+function itAsync(title, func) {
+  it(title, function() {
+    var finished = false;
+
+    function done() {
+      finished = true;
+    }
+
+    func(done);
+
+    waitsFor(function() {
+      return finished === true;
+    });
+  });
+}
+
+/* global checkConfig, isPromise, loadingClass, errorClass */
 describe('deferredBootstrapper', function () {
 
   it('should provide bootstrap function', function () {
     expect(typeof window.deferredBootstrapper.bootstrap).toBe('function');
+  });
+
+  describe('bootstrap', function () {
+
+    var bootstrap,
+        bodyElement;
+    var APP_NAME = 'testApp';
+
+    beforeEach(function() {
+      bootstrap = window.deferredBootstrapper.bootstrap;
+      bodyElement = window.document.body;
+    });
+
+    itAsync('should resolve with the value returned from the defined constant', function (done) {
+      bootstrap({
+        element: bodyElement,
+        module: APP_NAME,
+        resolve: {
+          CONFIG: function ($http, $q) {
+            var deferred = $q.defer();
+
+            deferred.resolve('foo');
+
+            return deferred.promise;
+          }
+        }
+      });
+
+      angular.module(APP_NAME, [])
+        .config(function (CONFIG) {
+          expect(CONFIG).toBe('foo');
+
+          done();
+        });
+    });
+
+    itAsync('should return a Promise which resolves with `true` in success case', function (done) {
+      var promise = bootstrap({
+        element: bodyElement,
+        module: APP_NAME,
+        resolve: {
+          CONFIG: function ($http, $q) {
+            var deferred = $q.defer();
+
+            deferred.resolve('foo');
+
+            return deferred.promise;
+          }
+        }
+      });
+
+      expect(isPromise(promise)).toBe(true);
+
+      promise.then(function (result) {
+          expect(result).toBe(true);
+
+          done();
+        });
+    });
+
+    describe('CSS class handling', function() {
+
+      itAsync('should add loading class immediately and remove it when resolved', function (done) {
+        var promise = bootstrap({
+          element: window.document.body,
+          module: APP_NAME,
+          resolve: {
+            CONFIG: function ($http, $q) {
+              expect(bodyElement.classList.contains(loadingClass)).toBe(true);
+
+              var deferred = $q.defer();
+
+              deferred.resolve('foo');
+
+              return deferred.promise;
+            }
+          }
+        });
+
+        angular.module(APP_NAME, [])
+          .config(function () {
+            // Yep, it's still there at this point
+            expect(bodyElement.classList.contains(loadingClass)).toBe(true);
+          });
+
+        promise.then(function () {
+          expect(bodyElement.classList.contains(loadingClass)).toBe(false);
+
+          done();
+        });
+      });
+
+      itAsync('should add error class in case Promise resolves to an error', function (done) {
+        bootstrap({
+          element: window.document.body,
+          module: APP_NAME,
+          resolve: {
+            CONFIG: function ($http, $q) {
+              expect(bodyElement.classList.contains(errorClass)).toBe(false);
+
+              var deferred = $q.defer();
+
+              deferred.reject(new Error('bar'));
+
+              return deferred.promise;
+            }
+          },
+          onError: function (/* err */) {
+            expect(bodyElement.classList.contains(errorClass)).toBe(true);
+
+            done();
+          }
+        });
+      });
+
+    });
+
   });
 
   describe('checkConfig()', function () {
