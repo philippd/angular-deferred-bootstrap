@@ -4,7 +4,7 @@ var isObject = angular.isObject,
   isFunction = angular.isFunction,
   isString = angular.isString,
   forEach = angular.forEach,
-  bodyElement = angular.element(document.body),
+  bodyElement,
   injector = angular.injector(['ng']),
   $q = injector.get('$q'),
   $http = injector.get('$http'),
@@ -57,6 +57,8 @@ function bootstrap (configParam) {
     module = config.module,
     promises = [],
     constantNames = [];
+
+  bodyElement = angular.element(document.body);
 
   addLoadingClass();
   checkConfig(config);
