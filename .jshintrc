@@ -1,5 +1,5 @@
 {
-  "predef": ["describe", "it", "expect", "angular"],
+  "predef": ["describe", "it", "beforeEach", "waitsFor", "expect", "angular"],
   "esnext": false,
   "bitwise": true,
   "curly": true,
