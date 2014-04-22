@@ -4,7 +4,7 @@ var isObject = angular.isObject,
   isFunction = angular.isFunction,
   isString = angular.isString,
   forEach = angular.forEach,
-  bodyElement = angular.element(document.body),
+  bodyElement,
   injector = angular.injector(['ng']),
   $q = injector.get('$q'),
   $http = injector.get('$http'),
@@ -44,10 +44,16 @@ function checkConfig (config) {
 }
 
 function doBootstrap (element, module) {
+  var deferred = $q.defer();
+
   angular.element(document).ready(function () {
     angular.bootstrap(element, [module]);
     removeLoadingClass();
+
+    deferred.resolve(true);
   });
+
+  return deferred.promise;
 }
 
 function bootstrap (configParam) {
@@ -57,6 +63,8 @@ function bootstrap (configParam) {
     module = config.module,
     promises = [],
     constantNames = [];
+
+  bodyElement = angular.element(document.body);
 
   addLoadingClass();
   checkConfig(config);
@@ -82,7 +90,8 @@ function bootstrap (configParam) {
       var result = value && value.data ? value.data : value;
       angular.module(module).constant(constantNames[index], result);
     });
-    doBootstrap(element, module);
+
+    return doBootstrap(element, module);
   }
 
   function handleError(error) {
@@ -94,7 +103,7 @@ function bootstrap (configParam) {
 
   forEach(config.resolve, callResolveFn);
 
-  $q.all(promises).then(handleResults, handleError);
+  return $q.all(promises).then(handleResults, handleError);
 
 }
 
