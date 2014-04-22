@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5 - 2014-04-22
+- bootstrap() now returns a promise, thanks @harriha
+- fixed ([#9](https://github.com/philippd/angular-deferred-bootstrap/issues/9): Loading/error CSS classes didn't work if the script was loaded in <head>, thanks @harriha
+
 ## 0.0.4 - 2014-04-16
 - add onError to allow custom error handling, closes [#1](https://github.com/philippd/angular-deferred-bootstrap/issues/1)
 
