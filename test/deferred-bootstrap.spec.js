@@ -2,7 +2,7 @@
 
 // A jasmine 2.0 -like interface for async tests
 function itAsync(title, func) {
-  it(title, function() {
+  it(title, function () {
     var finished = false;
 
     function done() {
@@ -11,7 +11,7 @@ function itAsync(title, func) {
 
     func(done);
 
-    waitsFor(function() {
+    waitsFor(function () {
       return finished === true;
     });
   });
@@ -30,7 +30,7 @@ describe('deferredBootstrapper', function () {
         bodyElement;
     var APP_NAME = 'testApp';
 
-    beforeEach(function() {
+    beforeEach(function () {
       bootstrap = window.deferredBootstrapper.bootstrap;
       bodyElement = window.document.body;
     });
@@ -76,13 +76,71 @@ describe('deferredBootstrapper', function () {
       expect(isPromise(promise)).toBe(true);
 
       promise.then(function (result) {
-          expect(result).toBe(true);
+        expect(result).toBe(true);
 
-          done();
-        });
+        done();
+      });
     });
 
-    describe('CSS class handling', function() {
+    itAsync('should allow custom injector module(s) to be used to create the injector', function (done) {
+      var customModuleName = 'custom.module';
+      angular.module(customModuleName, ['ng'])
+        .service('CustomService', ['$q', function ($q) {
+          this.get = function () {
+            var deferred = $q.defer();
+
+            deferred.resolve('foo');
+
+            return deferred.promise;
+          };
+        }]);
+
+      var promise = bootstrap({
+        element: bodyElement,
+        module: APP_NAME,
+        injectorModules: customModuleName,
+        resolve: {
+          CONFIG: ['CustomService', function (CustomService) {
+            return CustomService.get();
+          }]
+        }
+      });
+
+      expect(isPromise(promise)).toBe(true);
+
+      promise.then(function (result) {
+        expect(result).toBe(true);
+
+        done();
+      });
+    });
+
+    itAsync('should use the default ngInjector if "ng" is specified as the injectorModules config option', function (done) {
+      var promise = bootstrap({
+        element: bodyElement,
+        module: APP_NAME,
+        injectorModules: ['ng'],
+        resolve: {
+          CONFIG: function ($http, $q) {
+            var deferred = $q.defer();
+
+            deferred.resolve('foo');
+
+            return deferred.promise;
+          }
+        }
+      });
+
+      expect(isPromise(promise)).toBe(true);
+
+      promise.then(function (result) {
+        expect(result).toBe(true);
+
+        done();
+      });
+    });
+
+    describe('CSS class handling', function () {
 
       itAsync('should add loading class immediately and remove it when resolved', function (done) {
         var promise = bootstrap({
@@ -148,7 +206,8 @@ describe('deferredBootstrapper', function () {
         element: {},
         module: 'myModule',
         resolve: {
-          CONST: function () {}
+          CONST: function () {
+          }
         }
       };
       checkConfig(config);
@@ -166,7 +225,8 @@ describe('deferredBootstrapper', function () {
         element: {},
         module: [],
         resolve: {
-          CONST: function () {}
+          CONST: function () {
+          }
         }
       };
       expect(function () {
@@ -190,7 +250,8 @@ describe('deferredBootstrapper', function () {
         element: {},
         module: 'myModule',
         resolve: {
-          CONST: function () {}
+          CONST: function () {
+          }
         },
         onError: 'bla'
       };
@@ -205,7 +266,8 @@ describe('deferredBootstrapper', function () {
 
     it('should check if object is a promise', function () {
       var promise = {
-        then: function () {}
+        then: function () {
+        }
       };
       expect(isPromise(promise)).toBe(true);
     });
