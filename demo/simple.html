@@ -41,9 +41,9 @@ window.deferredBootstrapper.bootstrap({
   element: window.document.body,
   module: 'demoApp',
   resolve: {
-    STARTUP_CONFIG: function ($http) {
+    STARTUP_CONFIG: ['$http', function ($http) {
       return $http.get('/api/demo-config');
-    }
+    }]
   }
 });
 

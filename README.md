@@ -20,9 +20,9 @@ deferredBootstrapper.bootstrap({
   element: document.body,
   module: 'MyApp',
   resolve: {
-    APP_CONFIG: function ($http) {
+    APP_CONFIG: ['$http', function ($http) {
       return $http.get('/api/demo-config');
-    }
+    }]
   }
 });
 ```
@@ -44,7 +44,7 @@ To make it possible to conditionally show a loading indicator or an error messag
 Have a look at the demo pages to see this in action.
 
 ## Advanced usage
-You can have multiple constants resolved for your app and you can do in the resolve function whatever is necessary before the app is started. The only constraint is, that the function has to return a promise. It is important to note, that the arguments passed to your resolve functions are NOT dependency injected. You get access to the following services in the resolve function: $http, $q, injector
+You can have multiple constants resolved for your app and you can do in the resolve function whatever is necessary before the app is started. The only constraint is, that the function has to return a promise.
 
 To handle exceptions when the promises are resolved, you can add an onError function to the configuration object.
 
@@ -54,21 +54,55 @@ deferredBootstrapper.bootstrap({
   element: document.body,
   module: 'MyApp',
   resolve: {
-    APP_CONFIG: function ($http) {
+    APP_CONFIG: ['$http', function ($http) {
       return $http.get('/api/demo-config');
-    },
-    OTHER_CONSTANT: function ($http, $q, injector) {
-      var deferred = $q.defer(), $timeout = injector.get('$timeout');
+    }],
+    OTHER_CONSTANT: ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
+      var deferred = $q.defer();
       $timeout(function () {
         deferred.resolve('MyConstant');
       }, 2000);
       return deferred.promise;
-    }
+    }]
   },
   onError: function (error) {
 	alert('Could not bootstrap, error: ' + error);
   }
 });
+```
+
+## Custom injector modules
+By default, the injector that calls your resolve functions only provides the services from the AngularJS core module (ng). If you have a use case where you want to use one of your existing services to get configuration at bootstrap time, you can specify which modules should be made available and inject services from those modules in the resolve function. An example is below:
+
+```js
+deferredBootstrapper.bootstrap({
+        element: document.body,
+        module: 'myApp',
+        injectorModules: 'myApp.settings',
+        resolve: {
+            SETTINGS: ['SettingsService', function (SettingsService) {
+                return SettingsService.get('/settings');
+            }]
+        }
+    });
+```
+
+The ```injectorModules``` option can also take an array of modules. If you have multiple services spread across different modules you can also inject them:
+
+```js
+deferredBootstrapper.bootstrap({
+        element: document.body,
+        module: 'myApp',
+        injectorModules: ['myApp.settings', 'myApp.foo']
+        resolve: {
+            SETTINGS: ['SettingsService', function (SettingsService) {
+                return SettingsService.get('/settings');
+            }],
+            FOO: ['FooService', function (FooService) {
+                return FooService.get('/foo');
+            }]
+        }
+    });
 ```
 
 ## Testing

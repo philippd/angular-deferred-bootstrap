@@ -41,19 +41,19 @@ window.deferredBootstrapper.bootstrap({
   element: window.document.body,
   module: 'demoApp',
   resolve: {
-    STARTUP_CONFIG: function ($http) {
+    STARTUP_CONFIG: ['$http', function ($http) {
       return $http.get('/api/demo-config');
-    },
-    OTHER_CONFIG: function ($http) {
+    }],
+    OTHER_CONFIG: ['$http', function ($http) {
       return $http.get('/api/demo-config-2');
-    },
-    USING_Q: function ($http, $q, injector) {
-      var deferred = $q.defer(), $timeout = injector.get('$timeout');
+    }],
+    USING_Q: ['$http', '$q', '$timeout', function ($http, $q, $timeout) {
+      var deferred = $q.defer();
       $timeout(function () {
         deferred.resolve('MyConstant');
       }, 2000);
       return deferred.promise;
-    }
+    }]
   }
 });
 
