@@ -11,24 +11,24 @@ var isObject = angular.isObject,
   loadingClass = 'deferred-bootstrap-loading',
   errorClass = 'deferred-bootstrap-error';
 
-function addLoadingClass() {
+function addLoadingClass () {
   bodyElement.addClass(loadingClass);
 }
 
-function removeLoadingClass() {
+function removeLoadingClass () {
   bodyElement.removeClass(loadingClass);
 }
 
-function addErrorClass() {
+function addErrorClass () {
   removeLoadingClass();
   bodyElement.addClass(errorClass);
 }
 
-function isPromise(value) {
+function isPromise (value) {
   return isObject(value) && isFunction(value.then);
 }
 
-function checkConfig(config) {
+function checkConfig (config) {
   if (!isObject(config)) {
     throw new Error('Bootstrap configuration must be an object.');
   }
@@ -43,15 +43,15 @@ function checkConfig(config) {
   }
 }
 
-function createInjector(injectorModules) {
-  if (!isArray(injectorModules)) {
-    return (injectorModules === 'ng') ? ngInjector : angular.injector([injectorModules]);
-  } else {
+function createInjector (injectorModules) {
+  if (isArray(injectorModules)) {
     return (injectorModules.length === 1 && injectorModules[0] === 'ng') ? ngInjector : angular.injector(injectorModules);
+  } else {
+    return (injectorModules === 'ng') ? ngInjector : angular.injector([injectorModules]);
   }
 }
 
-function doBootstrap(element, module) {
+function doBootstrap (element, module) {
   var deferred = $q.defer();
 
   angular.element(document).ready(function () {
@@ -64,7 +64,7 @@ function doBootstrap(element, module) {
   return deferred.promise;
 }
 
-function bootstrap(configParam) {
+function bootstrap (configParam) {
   var config = configParam || {},
     element = config.element,
     module = config.module,
@@ -78,7 +78,7 @@ function bootstrap(configParam) {
   addLoadingClass();
   checkConfig(config);
 
-  function callResolveFn(resolveFunction, constantName) {
+  function callResolveFn (resolveFunction, constantName) {
     var result;
 
     constantNames.push(constantName);
@@ -97,7 +97,7 @@ function bootstrap(configParam) {
     }
   }
 
-  function handleResults(results) {
+  function handleResults (results) {
     forEach(results, function (value, index) {
       var result = value && value.data ? value.data : value;
       angular.module(module).constant(constantNames[index], result);
@@ -106,7 +106,7 @@ function bootstrap(configParam) {
     return doBootstrap(element, module);
   }
 
-  function handleError(error) {
+  function handleError (error) {
     addErrorClass();
     if (isFunction(config.onError)) {
       config.onError(error);
@@ -116,7 +116,6 @@ function bootstrap(configParam) {
   forEach(config.resolve, callResolveFn);
 
   return $q.all(promises).then(handleResults, handleError);
-
 }
 
 window.deferredBootstrapper = {
