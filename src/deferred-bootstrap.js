@@ -44,10 +44,13 @@ function checkConfig (config) {
 }
 
 function createInjector (injectorModules) {
-  if (isArray(injectorModules)) {
-    return (injectorModules.length === 1 && injectorModules[0] === 'ng') ? ngInjector : angular.injector(injectorModules);
+  if (isString(injectorModules)) {
+    return angular.injector(['ng', injectorModules]);
+  } else if (isArray(injectorModules) && injectorModules.length === 1 && injectorModules[0] === 'ng') {
+    return ngInjector;
   } else {
-    return (injectorModules === 'ng') ? ngInjector : angular.injector([injectorModules]);
+    injectorModules.unshift('ng');
+    return angular.injector(injectorModules);
   }
 }
 
@@ -68,7 +71,7 @@ function bootstrap (configParam) {
   var config = configParam || {},
     element = config.element,
     module = config.module,
-    injectorModules = config.injectorModules || ['ng'],
+    injectorModules = config.injectorModules || [],
     injector,
     promises = [],
     constantNames = [];
@@ -77,6 +80,7 @@ function bootstrap (configParam) {
 
   addLoadingClass();
   checkConfig(config);
+  injector = createInjector(injectorModules);
 
   function callResolveFn (resolveFunction, constantName) {
     var result;
@@ -87,7 +91,6 @@ function bootstrap (configParam) {
       throw new Error('Resolve for \'' + constantName + '\' is not a valid dependency injection format.');
     }
 
-    injector = createInjector(injectorModules);
     result = injector.instantiate(resolveFunction);
 
     if (isPromise(result)) {

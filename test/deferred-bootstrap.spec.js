@@ -115,6 +115,39 @@ describe('deferredBootstrapper', function () {
       });
     });
 
+    itAsync('should allow to inject services from ng module even if custom modules dont list it as dependency', function (done) {
+      var customModuleName = 'custom.module';
+      angular.module(customModuleName, [])
+        .service('CustomService', ['$q', function ($q) {
+          this.get = function () {
+            var deferred = $q.defer();
+
+            deferred.resolve('foo');
+
+            return deferred.promise;
+          };
+        }]);
+
+      var promise = bootstrap({
+        element: bodyElement,
+        module: APP_NAME,
+        injectorModules: customModuleName,
+        resolve: {
+          CONFIG: ['CustomService', '$timeout', function (CustomService, $timeout) {
+            return $timeout(CustomService.get, 1);
+          }]
+        }
+      });
+
+      expect(isPromise(promise)).toBe(true);
+
+      promise.then(function (result) {
+        expect(result).toBe(true);
+
+        done();
+      });
+    });
+
     itAsync('should use the default ngInjector if "ng" is specified as the injectorModules config option', function (done) {
       var promise = bootstrap({
         element: bodyElement,
