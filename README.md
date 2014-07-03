@@ -105,6 +105,8 @@ deferredBootstrapper.bootstrap({
     });
 ```
 
+**Note** that the services which are injected in your resolve functions will be instantiated again when the actual app starts. This means you can not save any state in your services in the resolve functions.
+
 ## Testing
 Since the constants that deferredBootstrapper adds to your applications module are not available in your unit tests, it makes sense to provide them in a global beforeEach():
 ```js
