@@ -2,7 +2,7 @@
   "author": "Philipp Denzler",
   "name": "angular-deferred-bootstrap",
   "description": "Initialize AngularJS apps with constants loaded from the back-end",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "https://github.com/philippd/angular-deferred-bootstrap",
   "repository": {
     "type": "git",
