@@ -95,7 +95,7 @@ function bootstrap (configParam) {
     injectorModules = config.injectorModules || [],
     injector,
     promises = [],
-    constantNames = [];
+    constants = [];
 
   bodyElement = angular.element(document.body);
 
@@ -106,7 +106,7 @@ function bootstrap (configParam) {
   function callResolveFn (resolveFunction, constantName, moduleName) {
     var result;
 
-    constantNames.push({
+    constants.push({
       name: constantName,
       moduleName: moduleName || module
     });
@@ -127,8 +127,8 @@ function bootstrap (configParam) {
   function handleResults (results) {
     forEach(results, function (value, index) {
       var result = value && value.data ? value.data : value,
-        moduleName = constantNames[index].moduleName,
-        constantName = constantNames[index].name;
+        moduleName = constants[index].moduleName,
+        constantName = constants[index].name;
 
       angular.module(moduleName).constant(constantName, result);
     });
@@ -147,8 +147,8 @@ function bootstrap (configParam) {
 
   if (config.moduleResolves) {
     forEach(config.moduleResolves, function (moduleResolve, index) {
-      forEach(moduleResolve.resolve, function (resolveFunction, contantName) {
-        callResolveFn(resolveFunction, contantName, config.moduleResolves[index].module);
+      forEach(moduleResolve.resolve, function (resolveFunction, constantName) {
+        callResolveFn(resolveFunction, constantName, config.moduleResolves[index].module);
       });
     });
   } else {
