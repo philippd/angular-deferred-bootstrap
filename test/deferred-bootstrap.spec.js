@@ -82,6 +82,75 @@ describe('deferredBootstrapper', function () {
       });
     });
 
+    itAsync('should allow constants to be added to a specified module', function (done) {
+      var appModule ='app.module',
+        constantsModuleOne = 'app.constants.one',
+        constantsModuleTwo = 'app.constants.two';
+
+      angular.module(appModule, ['ng'])
+        .config(function ($injector) {
+
+          expect($injector.has('CONSTANTS_ONE_CONFIG')).toBe(false);
+          expect($injector.has('CONSTANTS_ONE_MORE_CONFIG')).toBe(false);
+          expect($injector.has('CONSTANTS_TWO_CONFIG')).toBe(false);
+
+          done();
+        });
+
+      angular.module(constantsModuleOne, []);
+      angular.module(constantsModuleTwo, []);
+
+      bootstrap({
+        element: bodyElement,
+        module: appModule,
+        moduleResolves: [
+          {
+            module: constantsModuleOne,
+            resolve: {
+              CONSTANTS_ONE_CONFIG: function ($q) {
+                var deferred = $q.defer();
+
+                deferred.resolve('foo');
+
+                return deferred.promise;
+              },
+              CONSTANTS_ONE_MORE_CONFIG: function ($q) {
+                var deferred = $q.defer();
+
+                deferred.resolve('foo');
+
+                return deferred.promise;
+              }
+            }
+          },
+          {
+            module: constantsModuleTwo,
+            resolve: {
+              CONSTANTS_TWO_CONFIG: function ($q) {
+                var deferred = $q.defer();
+
+                deferred.resolve('foo');
+
+                return deferred.promise;
+              }
+            }
+          }
+        ]
+      }).then(function () {
+        var constantsOneInjector = angular.injector([constantsModuleOne]),
+          constantsTwoInjector = angular.injector([constantsModuleTwo]);
+
+        expect(constantsOneInjector.has('CONSTANTS_ONE_CONFIG')).toBe(true);
+        expect(constantsOneInjector.has('CONSTANTS_ONE_MORE_CONFIG')).toBe(true);
+        expect(constantsOneInjector.has('CONSTANTS_TWO_CONFIG')).toBe(false);
+
+        expect(constantsTwoInjector.has('CONSTANTS_ONE_CONFIG')).toBe(false);
+        expect(constantsTwoInjector.has('CONSTANTS_ONE_MORE_CONFIG')).toBe(false);
+        expect(constantsTwoInjector.has('CONSTANTS_TWO_CONFIG')).toBe(true);
+        done();
+      });
+    });
+
     itAsync('should allow custom injector module(s) to be used to create the injector', function (done) {
       var customModuleName = 'custom.module';
       angular.module(customModuleName, ['ng'])
@@ -267,6 +336,21 @@ describe('deferredBootstrapper', function () {
       }).toThrow('\'config.module\' must be a string.');
     });
 
+    it('should throw if both resolve and moduleResolves are defined', function () {
+      var config = {
+        element: {},
+        module: 'myModule',
+        resolve: {
+          CONST: function () {
+          }
+        },
+        moduleResolves: []
+      };
+      expect(function () {
+        checkConfig(config);
+      }).toThrow('Bootstrap configuration can contain either \'resolve\' or \'moduleResolves\' but not both');
+    });
+
     it('should throw if resolve is not an object', function () {
       var config = {
         element: {},
@@ -276,6 +360,49 @@ describe('deferredBootstrapper', function () {
       expect(function () {
         checkConfig(config);
       }).toThrow('\'config.resolve\' must be an object.');
+    });
+
+    it('should throw if moduleResolves is not an array', function () {
+      var config = {
+        element: {},
+        module: 'myModule',
+        moduleResolves: 1234
+      };
+      expect(function () {
+        checkConfig(config);
+      }).toThrow('\'config.moduleResolves\' must be an array.');
+    });
+
+    it('should throw if a moduleResolve does not contain a module name', function () {
+      var config = {
+        element: {},
+        module: 'myModule',
+        moduleResolves: [{
+          module: 'A.Test.Module',
+          resolve: {}
+        }, {
+          resolve: {}
+        }]
+      };
+      expect(function () {
+        checkConfig(config);
+      }).toThrow('A \'moduleResolve\' configuration item must contain a \'module\' name.');
+    });
+
+    it('should throw if a moduleResolve does not contain a resolve block', function () {
+      var config = {
+        element: {},
+        module: 'myModule',
+        moduleResolves: [{
+          module: 'A.Test.Module',
+          resolve: {}
+        }, {
+          module: 'A.Test.Module'
+        }]
+      };
+      expect(function () {
+        checkConfig(config);
+      }).toThrow('\'moduleResolve.resolve\' must be an object.');
     });
 
     it('should throw if onError is defined but not a function', function () {
