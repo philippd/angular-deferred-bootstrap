@@ -71,6 +71,41 @@ deferredBootstrapper.bootstrap({
 });
 ```
 
+## Attach constants to specific modules
+By default, any constants specified in the ```resolve``` object will be attached to the module specified in the ```module``` option. If you have a need to attach constants to different modules then this can be achieved by using  ```moduleResolves```:
+
+```js
+window.deferredBootstrapper.bootstrap({
+        element: document.body,
+        module: 'myApp',
+        moduleResolves: [
+            {
+                module: 'myApp.settings',
+                resolve: {
+                    CONSTANT_ONE: ['$http', function ($http) {
+                        return $http.get();
+                    }],
+                    CONSTANT_TWO: ['$http', function ($http) {
+                        return $http.get();
+                    }]
+                }
+            },
+            {
+                module: 'myApp.moreSettings',
+                resolve: {
+                    CONSTANT_THREE: ['$http', function ($http) {
+                        return $http.get();
+                    }]
+                }
+            }
+        ]
+    })
+```
+
+In the above example, ```CONSTANT_ONE``` and ```CONSTANT_TWO``` will be added to the ```'myApp.settings'``` module and ```CONSTANT_THREE``` will be added to the ```'myApp.moreSettings'``` module. There are no limits on how many ```moduleResolve``` objects you create and also no limit on the number of constants per ```moduleResolve```
+
+**Note** that only ```resolve``` or ```moduleResolves``` can be used - using both in the same configuration will throw an exception
+
 ## Custom injector modules
 By default, the injector that calls your resolve functions only provides the services from the AngularJS core module (ng). If you have a use case where you want to use one of your existing services to get configuration at bootstrap time, you can specify which modules should be made available and inject services from those modules in the resolve function. An example is below:
 
