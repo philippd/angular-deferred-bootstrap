@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app),
   url = require('url'),
+  path = require('path'),
   fs = require('fs');
 
 var getDemoConfig = function (req, res) {
@@ -26,8 +27,10 @@ app.configure(function () {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.errorHandler());
-  app.use(express.static(__dirname));
+  app.use(express.static(path.join(__dirname, 'demo')));
   app.use(app.router);
+
+    console.log(path.join(__dirname, 'demo'));
 
   app.get('/api/demo-config', getDemoConfig);
   app.get('/api/demo-config-2', getDemoConfig);

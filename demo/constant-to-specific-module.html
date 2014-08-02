@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Deferred Bootstrap Demo</title>
+    <style type="text/css">
+        #loading {
+            display: none;
+        }
+        .deferred-bootstrap-loading #loading {
+            display: block !important;
+        }
+
+        #error {
+            display: none;
+        }
+        .deferred-bootstrap-error #error {
+            display: block !important;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading">
+    Loading...
+</div>
+
+<div id="error">
+    Could not load configuration!
+</div>
+
+<div>
+    Check the console for output...
+</div>
+
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/src/deferred-bootstrap.js"></script>
+<script>
+
+    window.deferredBootstrapper.bootstrap({
+        element: window.document.body,
+        module: 'demoApp',
+        moduleResolves: [{
+            module: 'demoApp.settings',
+            resolve: {
+                STARTUP_CONFIG: ['$http', function ($http) {
+                    return $http.get('/api/demo-config');
+                }]
+            }
+        }]
+    }).then(function () {
+        angular.injector(['demoApp.settings']);
+    });
+
+    angular.module('demoApp.settings', [])
+            .config(function (STARTUP_CONFIG) {
+                console.log('"demoApp.settings" in config() - STARTUP_CONFIG: ' + JSON.stringify(STARTUP_CONFIG));
+            })
+            .run(function (STARTUP_CONFIG) {
+                console.log('"demoApp.settings" in run() - STARTUP_CONFIG: ' + JSON.stringify(STARTUP_CONFIG));
+            });
+
+    angular.module('demoApp', [])
+            .config(function ($injector) {
+                var hasStartupConfig = $injector.has('STARTUP_CONFIG');
+                console.log('"demoApp" in config() - "$injector.has("STARTUP_CONFIG")": ' + hasStartupConfig);
+            })
+            .run(function ($injector) {
+                var hasStartupConfig = $injector.has('STARTUP_CONFIG');
+                console.log('"demoApp" in run() - "$injector.has("STARTUP_CONFIG")": ' + hasStartupConfig);
+            });
+
+</script>
+</body>
+</html>
