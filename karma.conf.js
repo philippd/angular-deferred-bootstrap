@@ -16,7 +16,7 @@ module.exports = function (config) {
 
     exclude: [],
 
-    reports: ['progress'],
+    reporters: ['progress', 'coverage', 'coveralls'],
 
     port: 9876,
 
@@ -39,11 +39,22 @@ module.exports = function (config) {
 
     singleRun: false,
 
+    preprocessors: {
+      'src/**/!(*.spec)+(.js)': ['coverage']
+    },
+
+    coverageReporter: {
+      type: 'lcov',
+      dir: 'coverage/'
+    },
+
     plugins: [
       'karma-jasmine',
       'karma-chrome-launcher',
       'karma-firefox-launcher',
-      'karma-phantomjs-launcher'
+      'karma-phantomjs-launcher',
+      'karma-coverage',
+      'karma-coveralls'
     ]
   });
 };

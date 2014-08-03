@@ -2,6 +2,7 @@
 node_modules
 bower_components
 dist
+coverage
 npm-debug.log
 *.iml
 .idea
