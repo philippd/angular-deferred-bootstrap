@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.2. - 2014-08-04
+- Added ability to specify which module a constant is added to, implemented by [@Shepless](https://github.com/Shepless), see [#16](https://github.com/philippd/angular-deferred-bootstrap/pull/16)
+
 ## 0.1.1 - 2014-07-04
 - always add ```ng``` to the initial injector which is used during bootstrapping, see [#15](https://github.com/philippd/angular-deferred-bootstrap/issues/15)
 

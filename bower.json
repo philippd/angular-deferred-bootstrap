@@ -1,6 +1,6 @@
 {
   "name": "angular-deferred-bootstrap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "homepage": "https://github.com/philippd/angular-deferred-bootstrap",
   "authors": [
     "Philipp Denzler <philippd@gmail.com>"
@@ -10,7 +10,6 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "src/main/webapp/bower_components",
     "test",
     "tests"
   ],
