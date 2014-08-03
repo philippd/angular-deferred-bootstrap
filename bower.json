@@ -1,15 +1,21 @@
 {
-  "author": "Philipp Denzler",
   "name": "angular-deferred-bootstrap",
-  "description": "Initialize AngularJS apps with constants loaded from the back-end",
   "version": "0.1.1",
   "homepage": "https://github.com/philippd/angular-deferred-bootstrap",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/philippd/angular-deferred-bootstrap"
-  },
+  "authors": [
+    "Philipp Denzler <philippd@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/webapp/bower_components",
+    "test",
+    "tests"
+  ],
   "devDependencies": {
-    "angular": "~1.2.14",
-    "angular-mocks": "~1.2.14"
+    "angular": "1.2.21",
+    "angular-mocks": "1.2.21"
   }
 }
