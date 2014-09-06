@@ -143,8 +143,6 @@ function bootstrap (configParam) {
     }
   }
 
-  forEach(config.resolve, callResolveFn);
-
   if (config.moduleResolves) {
     forEach(config.moduleResolves, function (moduleResolve, index) {
       forEach(moduleResolve.resolve, function (resolveFunction, constantName) {

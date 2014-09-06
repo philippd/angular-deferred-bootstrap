@@ -1,6 +1,9 @@
 # Changelog
 
-## 0.1.2. - 2014-08-04
+## 0.1.3 - 2014-08-08
+- Fixed bug that the resolve function was called twice during bootstrapping, see aea0e2058e3c5bb881a92a1b3c277e4f0aed6dc5
+
+## 0.1.2 - 2014-08-04
 - Added ability to specify which module a constant is added to, implemented by [@Shepless](https://github.com/Shepless), see [#16](https://github.com/philippd/angular-deferred-bootstrap/pull/16)
 
 ## 0.1.1 - 2014-07-04
