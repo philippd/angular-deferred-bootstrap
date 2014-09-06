@@ -27,10 +27,8 @@ app.configure(function () {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.errorHandler());
-  app.use(express.static(path.join(__dirname, 'demo')));
+  app.use(express.static(__dirname));
   app.use(app.router);
-
-    console.log(path.join(__dirname, 'demo'));
 
   app.get('/api/demo-config', getDemoConfig);
   app.get('/api/demo-config-2', getDemoConfig);

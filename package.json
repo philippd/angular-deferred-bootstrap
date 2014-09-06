@@ -31,7 +31,7 @@
     "grunt-contrib-jshint": "0.10.0",
     "grunt-contrib-clean": "0.6.0",
     "load-grunt-tasks": "0.6.0",
-    "grunt-express": "1.4.1",
-    "express": "4.7.2"
+    "express": "~3.4.8",
+    "grunt-express": "~1.2.1"
   }
 }
