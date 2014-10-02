@@ -5,11 +5,10 @@ var isObject = angular.isObject,
   isArray = angular.isArray,
   isString = angular.isString,
   forEach = angular.forEach,
-  ngInjector = angular.injector(['ng']),
-  $q = ngInjector.get('$q'),
-  bodyElement,
   loadingClass = 'deferred-bootstrap-loading',
-  errorClass = 'deferred-bootstrap-error';
+  errorClass = 'deferred-bootstrap-error',
+  bodyElement,
+  $q;
 
 function addLoadingClass () {
   bodyElement.addClass(loadingClass);
@@ -63,16 +62,22 @@ function checkConfig (config) {
     throw new Error('\'config.onError\' must be a function.');
   }
 }
+function provideRootElement (modules, element) {
+  element = angular.element(element);
+  modules.unshift(['$provide', function($provide) {
+    $provide.value('$rootElement', element);
+  }]);
+}
 
-function createInjector (injectorModules) {
+function createInjector (injectorModules, element) {
+  var modules = ['ng'];
   if (isString(injectorModules)) {
-    return angular.injector(['ng', injectorModules]);
-  } else if (isArray(injectorModules) && injectorModules.length === 1 && injectorModules[0] === 'ng') {
-    return ngInjector;
-  } else {
-    injectorModules.unshift('ng');
-    return angular.injector(injectorModules);
+    modules.push(injectorModules);
+  } else if (isArray(injectorModules)) {
+    modules = modules.concat(injectorModules);
   }
+  provideRootElement(modules, element);
+  return angular.injector(modules, element);
 }
 
 function doBootstrap (element, module) {
@@ -101,7 +106,8 @@ function bootstrap (configParam) {
 
   addLoadingClass();
   checkConfig(config);
-  injector = createInjector(injectorModules);
+  injector = createInjector(injectorModules, element);
+  $q = injector.get('$q');
 
   function callResolveFn (resolveFunction, constantName, moduleName) {
     var result;
