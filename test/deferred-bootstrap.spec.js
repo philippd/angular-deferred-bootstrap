@@ -17,7 +17,7 @@ function itAsync(title, func) {
   });
 }
 
-/* global checkConfig, isPromise, loadingClass, errorClass */
+/* global checkConfig, createInjector, isPromise, loadingClass, errorClass */
 describe('deferredBootstrapper', function () {
 
   it('should provide bootstrap function', function () {
@@ -33,6 +33,29 @@ describe('deferredBootstrapper', function () {
     beforeEach(function () {
       bootstrap = window.deferredBootstrapper.bootstrap;
       bodyElement = window.document.body;
+    });
+
+    itAsync('should inject $location', function (done) {
+      bootstrap({
+        element: bodyElement,
+        module: APP_NAME,
+        resolve: {
+          LOCATION: function ($http, $q, $location) {
+            var deferred = $q.defer();
+
+            deferred.resolve($location);
+
+            return deferred.promise;
+          }
+        }
+      });
+
+      angular.module(APP_NAME, [])
+        .config(function (LOCATION) {
+          expect(LOCATION).toBeDefined();
+
+          done();
+        });
     });
 
     itAsync('should resolve with the value returned from the defined constant', function (done) {
@@ -420,6 +443,57 @@ describe('deferredBootstrapper', function () {
       }).toThrow('\'config.onError\' must be a function.');
     });
 
+  });
+
+  describe('createInjector()', function () {
+    var element;
+
+    beforeEach(function () {
+      angular.module('module1', []);
+      angular.module('module2', []);
+      element = angular.element('<div></div>');
+    });
+
+    it('should create injector with given module as string', function () {
+      // given
+      var modules = 'module1';
+      spyOn(angular, 'injector').andCallThrough();
+
+      // when
+      createInjector(modules, element);
+      var injectorModules = angular.injector.mostRecentCall.args[0];
+
+      // then
+      expect(injectorModules.indexOf('ng')).not.toBe(-1);
+      expect(injectorModules.indexOf('module1')).not.toBe(-1);
+    });
+
+    it('should create injector with given modules as array', function () {
+      // given
+      var modules = ['module1', 'module2'];
+      spyOn(angular, 'injector').andCallThrough();
+
+      // when
+      createInjector(modules, element);
+      var injectorModules = angular.injector.mostRecentCall.args[0];
+
+      // then
+      expect(injectorModules.indexOf('ng')).not.toBe(-1);
+      expect(injectorModules.indexOf('module1')).not.toBe(-1);
+      expect(injectorModules.indexOf('module2')).not.toBe(-1);
+    });
+
+    it('should create injector with given element', function () {
+      // given
+      var modules = 'module1';
+      spyOn(angular, 'injector').andCallThrough();
+
+      // when
+      createInjector(modules, element);
+
+      // then
+      expect(angular.injector).toHaveBeenCalledWith(jasmine.any(Object), element);
+    });
   });
 
   describe('isPromise()', function () {
