@@ -152,6 +152,23 @@ beforeEach(function () {
 });
 ```
 
+## StrictDi and Bootstrap Config
+To set the AngularJS strictDi mode, or any future angular.boostrap config parameters, pass in an optional config object called bootstrapConfig:
+```js
+deferredBootstrapper.bootstrap({
+  element: document.body,
+  module: 'MyApp',
+  bootstrapConfig: {
+    strictDi: true
+  },
+  resolve: {
+    APP_CONFIG: ['$http', function ($http) {
+      return $http.get('/api/demo-config');
+    }]
+  }
+});
+```
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT) © Philipp Denzler

@@ -385,6 +385,36 @@ describe('deferredBootstrapper', function () {
       }).toThrow('\'config.resolve\' must be an object.');
     });
 
+    it('should throw if bootstrapConfig is not an object', function () {
+      var config = {
+        element: {},
+        module: 'myModule',
+        resolve: {
+          CONST: function () {
+          }
+        },
+        bootstrapConfig: 123
+      };
+      expect(function () {
+        checkConfig(config);
+      }).toThrow('\'config.bootstrapConfig\' must be an object.');
+    });
+
+    it('should accept valid deferred bootstrap config with bootstrapConfig option', function () {
+      var config = {
+        element: {},
+        module: 'myModule',
+        resolve: {
+          CONST: function () {
+          }
+        },
+        bootstrapConfig: {
+          strictDi: true
+        }
+      };
+      checkConfig(config);
+    });
+
     it('should throw if moduleResolves is not an array', function () {
       var config = {
         element: {},
