@@ -1,7 +1,10 @@
 # Changelog
 
+## 0.1.5 - UNRELEASED
+- Pass additional configuration to bootstrap the AngularJS app (for example ```strictDi``` mode), implemented by [@jeffsheets](https://github.com/jeffsheets), see [#23](https://github.com/philippd/angular-deferred-bootstrap/pull/23)
+
 ## 0.1.4 - 2014-10-03
-- Improved injector creation to allow injecting services depending on the $rootElement, see [#22](https://github.com/philippd/angular-deferred-bootstrap/pull/22)
+- Improved injector creation to allow injecting services depending on the $rootElement, implemented by [@B8li](https://github.com/B8li), see [#22](https://github.com/philippd/angular-deferred-bootstrap/pull/22)
 
 ## 0.1.3 - 2014-08-08
 - Fixed bug that the resolve function was called twice during bootstrapping, see aea0e2058e3c5bb881a92a1b3c277e4f0aed6dc5
