@@ -14,7 +14,7 @@ bower install --save angular-deferred-bootstrap
 
 ## Usage
 
-Instead of using the ng-app directive or angular.bootstrap(), use the deferredBootstrapper to initialize your app:
+Instead of using the ```ng-app``` directive or ```angular.bootstrap()```, use the ```deferredBootstrapper``` to initialize your app:
 ```js
 deferredBootstrapper.bootstrap({
   element: document.body,
@@ -27,7 +27,7 @@ deferredBootstrapper.bootstrap({
 });
 ```
 
-This will make the response of your $http call available as a constant to your AngularJS app. This means you can now use dependency injection to access the APP_CONFIG wherever you need it in your app (even in config() blocks!).
+This will make the response of your ```$http``` call available as a constant to your AngularJS app. This means you can now use dependency injection to access the ```APP_CONFIG``` wherever you need it in your app (even in ```config()``` blocks!).
 ```js
 angular.module('MyApp', [])
   .config(function (APP_CONFIG) {
@@ -46,7 +46,7 @@ Have a look at the demo pages to see this in action.
 ## Advanced usage
 You can have multiple constants resolved for your app and you can do in the resolve function whatever is necessary before the app is started. The only constraint is, that the function has to return a promise.
 
-To handle exceptions when the promises are resolved, you can add an onError function to the configuration object.
+To handle exceptions when the promises are resolved, you can add an ```onError``` function to the configuration object.
 
 Example:
 ```js
@@ -107,7 +107,7 @@ In the above example, ```CONSTANT_ONE``` and ```CONSTANT_TWO``` will be added to
 **Note** that only ```resolve``` or ```moduleResolves``` can be used - using both in the same configuration will throw an exception
 
 ## Custom injector modules
-By default, the injector that calls your resolve functions only provides the services from the AngularJS core module (ng). If you have a use case where you want to use one of your existing services to get configuration at bootstrap time, you can specify which modules should be made available and inject services from those modules in the resolve function. An example is below:
+By default, the injector that calls your resolve functions only provides the services from the AngularJS core module ```ng```. If you have a use case where you want to use one of your existing services to get configuration at bootstrap time, you can specify which modules should be made available and inject services from those modules in the resolve function. An example is below:
 
 ```js
 deferredBootstrapper.bootstrap({
@@ -143,8 +143,8 @@ deferredBootstrapper.bootstrap({
 **Note** that the services which are injected in your resolve functions will be instantiated again when the actual app starts. This means you can not save any state in your services in the resolve functions.
 
 
-## StrictDi and Bootstrap Config
-To set the AngularJS strictDi mode, or any future angular.boostrap config parameters, pass in an optional config object called bootstrapConfig:
+## Bootstrap Config and StrictDi
+To set the AngularJS ```strictDi``` mode, or any future ```angular.boostrap``` config parameters, pass in an optional config object called ```bootstrapConfig```:
 ```js
 deferredBootstrapper.bootstrap({
   element: document.body,
