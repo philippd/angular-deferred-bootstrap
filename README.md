@@ -142,15 +142,6 @@ deferredBootstrapper.bootstrap({
 
 **Note** that the services which are injected in your resolve functions will be instantiated again when the actual app starts. This means you can not save any state in your services in the resolve functions.
 
-## Testing
-Since the constants that deferredBootstrapper adds to your applications module are not available in your unit tests, it makes sense to provide them in a global beforeEach():
-```js
-beforeEach(function () {
-  module(function ($provide) {
-    $provide.constant('APP_CONFIG', { someUrl: '/dummyValue' });
-  });
-});
-```
 
 ## StrictDi and Bootstrap Config
 To set the AngularJS strictDi mode, or any future angular.boostrap config parameters, pass in an optional config object called bootstrapConfig:
@@ -166,6 +157,16 @@ deferredBootstrapper.bootstrap({
       return $http.get('/api/demo-config');
     }]
   }
+});
+```
+
+## Testing
+Since the constants that deferredBootstrapper adds to your applications module are not available in your unit tests, it makes sense to provide them in a global beforeEach():
+```js
+beforeEach(function () {
+  module(function ($provide) {
+    $provide.constant('APP_CONFIG', { someUrl: '/dummyValue' });
+  });
 });
 ```
 
