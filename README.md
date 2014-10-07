@@ -4,6 +4,16 @@
 
 This component provides a global resolve function for your app. It works similar to the resolve functions you may know from ngRoute or ui-router: You define what needs to be loaded from the back-end before your application can be started and the deferred bootstrapper takes care of loading the data and bootstrapping the application.
 
+- [Install](#user-content-install)
+- [Usage](#user-content-usage)
+- [Loading and error indicators](#user-content-loading-and-error-indicators)
+- [Advanced usage](#user-content-advanced-usage)
+- [Attach constants to specific modules](#user-content-attach-constants-to-specific-modules)
+- [Custom injector modules](#user-content-custom-injector-modules)
+- [Bootstrap Config and StrictDi](#user-content-bootstrap-config-and-strictdi)
+- [Testing](#user-content-testing)
+- [License](#user-content-license)
+
 ## Install
 
 #### [Bower](http://bower.io)
