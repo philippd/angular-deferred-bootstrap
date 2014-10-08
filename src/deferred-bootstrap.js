@@ -162,7 +162,9 @@ function bootstrap (configParam) {
       });
     });
   } else {
-    forEach(config.resolve, callResolveFn);
+    forEach(config.resolve, function (resolveFunction, constantName) {
+      callResolveFn(resolveFunction, constantName);
+    });
   }
 
   return $q.all(promises).then(handleResults, handleError);
