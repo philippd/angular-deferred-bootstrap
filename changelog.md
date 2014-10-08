@@ -1,6 +1,7 @@
 # Changelog
 
-## 0.1.5 - UNRELEASED
+## 0.1.5 - 2014-10-08
+- Fixed call of resolve function to not fail if angular.forEach passes the object as third argument in each iteration (Angular > 1.3.0-rc.1), see [#20](https://github.com/philippd/angular-deferred-bootstrap/issues/20)
 - Pass additional configuration to bootstrap the AngularJS app (for example ```strictDi``` mode), implemented by [@jeffsheets](https://github.com/jeffsheets), see [#23](https://github.com/philippd/angular-deferred-bootstrap/pull/23)
 
 ## 0.1.4 - 2014-10-03
