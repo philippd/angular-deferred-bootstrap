@@ -1,3 +1,4 @@
+(function(){
 'use strict';
 
 var isObject = angular.isObject,
@@ -173,3 +174,4 @@ function bootstrap (configParam) {
 window.deferredBootstrapper = {
   bootstrap: bootstrap
 };
+})();
