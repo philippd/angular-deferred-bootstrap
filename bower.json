@@ -13,6 +13,10 @@
     "test",
     "tests"
   ],
+  "main":"./src/deferred-bootstrap.js",
+   "dependencies": {
+    "angular": ">=1.2.21"
+  },
   "devDependencies": {
     "angular": "1.2.21",
     "angular-mocks": "1.2.21"
