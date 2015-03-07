@@ -1,4 +1,6 @@
-# angular-deferred-bootstrap [![Build Status](https://travis-ci.org/philippd/angular-deferred-bootstrap.svg?branch=master)](https://travis-ci.org/philippd/angular-deferred-bootstrap) [![Coverage Status](https://img.shields.io/coveralls/philippd/angular-deferred-bootstrap.svg)](https://coveralls.io/r/philippd/angular-deferred-bootstrap?branch=master)[![NPM version](https://badge.fury.io/js/angular-deferred-bootstrap.svg)](http://badge.fury.io/js/angular-deferred-bootstrap)
+# angular-deferred-bootstrap
+
+[![Build Status](https://travis-ci.org/philippd/angular-deferred-bootstrap.svg?branch=master)](https://travis-ci.org/philippd/angular-deferred-bootstrap) [![Coverage Status](https://img.shields.io/coveralls/philippd/angular-deferred-bootstrap.svg)](https://coveralls.io/r/philippd/angular-deferred-bootstrap?branch=master)[![NPM version](https://badge.fury.io/js/angular-deferred-bootstrap.svg)](http://badge.fury.io/js/angular-deferred-bootstrap)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/philippd/angular-deferred-bootstrap?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > Initialize your AngularJS app with constants loaded from the back-end.
