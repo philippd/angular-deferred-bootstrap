@@ -14,12 +14,13 @@ function addLoadingClass () {
   bodyElement.addClass(loadingClass);
 }
 
-function removeLoadingClass () {
+function removeBodyClasses () {
   bodyElement.removeClass(loadingClass);
+  bodyElement.removeClass(errorClass);
 }
 
 function addErrorClass () {
-  removeLoadingClass();
+  removeBodyClasses();
   bodyElement.addClass(errorClass);
 }
 
@@ -90,7 +91,7 @@ function doBootstrap (element, module, bootstrapConfig) {
 
   angular.element(document).ready(function () {
     angular.bootstrap(element, [module], bootstrapConfig);
-    removeLoadingClass();
+    removeBodyClasses();
 
     deferred.resolve(true);
   });
