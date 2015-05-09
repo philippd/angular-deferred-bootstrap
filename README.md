@@ -25,11 +25,16 @@ This component provides a global resolve function for your app. It works similar
 bower install --save angular-deferred-bootstrap
 ```
 
-
 #### [npm](http://www.npmjs.com)
 
 ```
 npm install angular-deferred-bootstrap
+```
+
+#### [jspm](http://jspm.io)
+
+```
+jspm install angular-deferred-bootstrap
 ```
 
 ## Usage
