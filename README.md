@@ -32,6 +32,12 @@ bower install --save angular-deferred-bootstrap
 npm install angular-deferred-bootstrap
 ```
 
+#### [jspm](http://jspm.io)
+
+```
+jspm install angular-deferred-bootstrap
+```
+
 ## Usage
 
 Instead of using the ```ng-app``` directive or ```angular.bootstrap()```, use the ```deferredBootstrapper``` to initialize your app:
