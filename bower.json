@@ -5,6 +5,7 @@
   "authors": [
     "Philipp Denzler <philippd@gmail.com>"
   ],
+  "main": "angular-deferred-bootstrap.js",
   "license": "MIT",
   "ignore": [
     "**/.*",

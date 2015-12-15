@@ -14,6 +14,7 @@
   "author": {
     "name": "Philipp Denzler"
   },
+  "main": "angular-deferred-bootstrap.js",
   "license": "MIT",
   "devDependencies": {
     "bower": "~1.3.8",
