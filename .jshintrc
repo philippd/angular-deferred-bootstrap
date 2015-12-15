@@ -1,5 +1,5 @@
 {
-  "predef": ["describe", "it", "beforeEach", "waitsFor", "expect", "angular", "spyOn", "jasmine"],
+  "predef": ["describe", "it", "beforeEach", "waitsFor", "expect", "angular", "spyOn", "jasmine", "define"],
   "esnext": false,
   "bitwise": true,
   "curly": true,
