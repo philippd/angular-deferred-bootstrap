@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.8 - 2015-12-15
+- Add support for CommonJS and AMD modules
+
+## 0.1.7 - 2015-05-09
+- Add JSPM support
+
 ## 0.1.6 - 2015-04-09
 - Remove error class after successful bootstrap, fixes [#32](https://github.com/philippd/angular-deferred-bootstrap/issues/32)
 
