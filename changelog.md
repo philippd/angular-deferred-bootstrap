@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.9 - 2015-12-17
+- Fixed broken support for AMD modules
+
 ## 0.1.8 - 2015-12-15
 - Add support for CommonJS and AMD modules
 
