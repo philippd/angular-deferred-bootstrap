@@ -176,7 +176,7 @@ var deferredBootstrapper = {
 };
 
 if(typeof define === 'function' && define.amd) {
-  define(['deferredBootstrapper'], deferredBootstrapper);
+  define([], deferredBootstrapper);
 } else if(typeof module === 'object' && module.exports) {
   module.exports = deferredBootstrapper;
 } else {
