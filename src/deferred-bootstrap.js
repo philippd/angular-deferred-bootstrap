@@ -137,12 +137,14 @@ function bootstrap (configParam) {
     }
   }
 
-  function handleResults (results) {
+  function handleResults (results,error) {
     forEach(results, function (value, index) {
       var result = value && value.data ? value.data : value,
         moduleName = constants[index].moduleName,
         constantName = constants[index].name;
-
+      	if (error){
+      		result._error=error;
+      	}
       angular.module(moduleName).constant(constantName, result);
     });
 
@@ -153,6 +155,10 @@ function bootstrap (configParam) {
     addErrorClass();
     if (isFunction(config.onError)) {
       config.onError(error);
+    }
+    if (config.continueOnError){
+    	handleResults (constants,error);
+    	return doBootstrap(element, module, bootstrapConfig);
     }
   }
 
