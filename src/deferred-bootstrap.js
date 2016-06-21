@@ -90,7 +90,11 @@ function doBootstrap (element, module, bootstrapConfig) {
   var deferred = $q.defer();
 
   angular.element(document).ready(function () {
-    angular.bootstrap(element, [module], bootstrapConfig);
+    try {
+      angular.bootstrap(element, [module], bootstrapConfig);
+    } catch (error) {
+      deferred.reject(error);
+    }
     removeBodyClasses();
 
     deferred.resolve(true);
@@ -168,7 +172,7 @@ function bootstrap (configParam) {
     });
   }
 
-  return $q.all(promises).then(handleResults, handleError);
+  return $q.all(promises).then(handleResults).then(null, handleError);
 }
 
 var deferredBootstrapper = {
