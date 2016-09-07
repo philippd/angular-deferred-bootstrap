@@ -32,8 +32,8 @@ function checkConfig (config) {
   if (!isObject(config)) {
     throw new Error('Bootstrap configuration must be an object.');
   }
-  if (!isString(config.module)) {
-    throw new Error('\'config.module\' must be a string.');
+  if ((!isString(config.module) && !isArray(config.module)) || (isArray(config.module) && !config.module.length)) {
+    throw new Error('\'config.module\' must be a string or a non-empty array.');
   }
   if (config.resolve && config.moduleResolves) {
     throw new Error('Bootstrap configuration can contain either \'resolve\' or \'moduleResolves\' but not both');
@@ -86,11 +86,11 @@ function createInjector (injectorModules, element) {
   return angular.injector(modules, element);
 }
 
-function doBootstrap (element, module, bootstrapConfig) {
+function doBootstrap (element, modules, bootstrapConfig) {
   var deferred = $q.defer();
 
   angular.element(document).ready(function () {
-    angular.bootstrap(element, [module], bootstrapConfig);
+    angular.bootstrap(element, modules, bootstrapConfig);
     removeBodyClasses();
 
     deferred.resolve(true);
@@ -102,7 +102,8 @@ function doBootstrap (element, module, bootstrapConfig) {
 function bootstrap (configParam) {
   var config = configParam || {},
     element = config.element,
-    module = config.module,
+    modules = isArray(config.module) ? config.module : [config.module],
+    module,
     injectorModules = config.injectorModules || [],
     injector,
     promises = [],
@@ -113,6 +114,10 @@ function bootstrap (configParam) {
 
   addLoadingClass();
   checkConfig(config);
+
+  // When bootstraping multiple modules, set constants on the first one
+  module = modules[0];
+
   injector = createInjector(injectorModules, element);
   $q = injector.get('$q');
 
@@ -146,7 +151,7 @@ function bootstrap (configParam) {
       angular.module(moduleName).constant(constantName, result);
     });
 
-    return doBootstrap(element, module, bootstrapConfig);
+    return doBootstrap(element, modules, bootstrapConfig);
   }
 
   function handleError (error) {

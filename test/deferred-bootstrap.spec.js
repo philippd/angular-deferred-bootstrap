@@ -58,6 +58,31 @@ describe('deferredBootstrapper', function () {
         });
     });
 
+    itAsync('should inject $location to first module in module array', function (done) {
+      bootstrap({
+        element: bodyElement,
+        module: [APP_NAME, 'module2'],
+        resolve: {
+          LOCATION: function ($http, $q, $location) {
+            var deferred = $q.defer();
+
+            deferred.resolve($location);
+
+            return deferred.promise;
+          }
+        }
+      });
+
+      angular.module('module2', []);
+
+      angular.module(APP_NAME, [])
+        .config(function (LOCATION) {
+          expect(LOCATION).toBeDefined();
+
+          done();
+        });
+    });
+
     itAsync('should resolve with the value returned from the defined constant', function (done) {
       bootstrap({
         element: bodyElement,
@@ -326,7 +351,7 @@ describe('deferredBootstrapper', function () {
 
   describe('checkConfig()', function () {
 
-    it('should accept valid deferred bootstrap config', function () {
+    it('should accept valid deferred bootstrap config with module set to a string', function () {
       var config = {
         element: {},
         module: 'myModule',
@@ -345,7 +370,19 @@ describe('deferredBootstrapper', function () {
       }).toThrow('Bootstrap configuration must be an object.');
     });
 
-    it('should throw if module is not a string', function () {
+    it('should accept valid deferred bootstrap config with module set to an array', function () {
+      var config = {
+        element: {},
+        module: ['myModule'],
+        resolve: {
+          CONST: function () {
+          }
+        }
+      };
+      checkConfig(config);
+    });
+
+    it('should throw if module is an empty array', function () {
       var config = {
         element: {},
         module: [],
@@ -356,7 +393,21 @@ describe('deferredBootstrapper', function () {
       };
       expect(function () {
         checkConfig(config);
-      }).toThrow('\'config.module\' must be a string.');
+      }).toThrow('\'config.module\' must be a string or a non-empty array.');
+    });
+
+    it('should throw if module is not a string or an array', function () {
+      var config = {
+        element: {},
+        module: 7,
+        resolve: {
+          CONST: function () {
+          }
+        }
+      };
+      expect(function () {
+        checkConfig(config);
+      }).toThrow('\'config.module\' must be a string or a non-empty array.');
     });
 
     it('should throw if both resolve and moduleResolves are defined', function () {
